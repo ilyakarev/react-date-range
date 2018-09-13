@@ -17,8 +17,9 @@ import {
 } from 'date-fns';
 import { getMonthDisplayRange } from '../utils';
 
-function renderWeekdays(styles, dateOptions) {
+function renderWeekdays(styles, dateOptions, weekDaysFormat) {
   const now = new Date();
+  console.log(weekDaysFormat);
   return (
     <div className={styles.weekDays}>
       {eachDayOfInterval({
@@ -26,7 +27,7 @@ function renderWeekdays(styles, dateOptions) {
         end: endOfWeek(now, dateOptions),
       }).map((day, i) => (
         <span className={styles.weekDay} key={i}>
-          {format(day, 'ddd', dateOptions)}
+          {format(day, weekDaysFormat ? weekDaysFormat : 'ddd', dateOptions)}
         </span>
       ))}
     </div>
@@ -39,7 +40,10 @@ class Month extends PureComponent {
     const { displayMode, focusedRange, drag, styles, disabledDates } = this.props;
     const minDate = this.props.minDate && startOfDay(this.props.minDate);
     const maxDate = this.props.maxDate && endOfDay(this.props.maxDate);
-    const monthDisplay = getMonthDisplayRange(this.props.month, this.props.dateOptions);
+    const monthDisplay = getMonthDisplayRange(
+      this.props.month,
+      this.props.dateOptions,
+    );
     let ranges = this.props.ranges;
     if (displayMode === 'dateRange' && drag.status) {
       let { startDate, endDate } = drag.range;
@@ -60,7 +64,7 @@ class Month extends PureComponent {
             {format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)}
           </div>
         ) : null}
-        {this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions)}
+        {this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions, this.props.weekDaysFormat)}
         <div className={styles.days} onMouseLeave={this.props.onMouseLeave}>
           {eachDayOfInterval({ start: monthDisplay.start, end: monthDisplay.end }).map(
             (day, index) => {
@@ -131,6 +135,7 @@ Month.propTypes = {
   onDragSelectionMove: PropTypes.func,
   onMouseLeave: PropTypes.func,
   monthDisplayFormat: PropTypes.string,
+  weekDaysFormat: PropTypes.string,
   showWeekDays: PropTypes.bool,
   showMonthName: PropTypes.bool,
 };

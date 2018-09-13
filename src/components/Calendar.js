@@ -224,6 +224,7 @@ class Calendar extends PureComponent {
   }
   renderWeekdays() {
     const now = new Date();
+    const { weekDaysFormat } = this.props;
     return (
       <div className={this.styles.weekDays}>
         {eachDayOfInterval({
@@ -231,7 +232,7 @@ class Calendar extends PureComponent {
           end: endOfWeek(now, this.dateOptions),
         }).map((day, i) => (
           <span className={this.styles.weekDay} key={i}>
-            {format(day, 'ddd', this.dateOptions)}
+            {format(day, weekDaysFormat ? weekDaysFormat : 'ddd', this.dateOptions)}
           </span>
         ))}
       </div>
@@ -355,8 +356,9 @@ class Calendar extends PureComponent {
       maxDate,
       minDate,
       rangeColors,
-      color,
+      color, weekDaysFormat,
     } = this.props;
+
     const { scrollArea, focusedDate } = this.state;
     const isVertical = direction === 'vertical';
     const navigatorRenderer = this.props.navigatorRenderer || this.renderMonthAndYear;
