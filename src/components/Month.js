@@ -19,7 +19,6 @@ import { getMonthDisplayRange } from '../utils';
 
 function renderWeekdays(styles, dateOptions, weekDaysFormat) {
   const now = new Date();
-  console.log(weekDaysFormat);
   return (
     <div className={styles.weekDays}>
       {eachDayOfInterval({

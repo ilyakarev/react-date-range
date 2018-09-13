@@ -170,6 +170,7 @@ export default class Main extends Component {
               moveRangeOnFirstSelection={false}
               className={'PreviewArea'}
               weekDaysFormat={'dd'}
+              locale={rdrLocales['ru']}
               months={2}
               ranges={[this.state.dateRangePicker.selection]}
               direction="horizontal"

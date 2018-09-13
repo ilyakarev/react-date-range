@@ -77,7 +77,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function renderWeekdays(styles, dateOptions, weekDaysFormat) {
   var now = new Date();
-  console.log(weekDaysFormat);
   return _react2.default.createElement(
     'div',
     { className: styles.weekDays },
